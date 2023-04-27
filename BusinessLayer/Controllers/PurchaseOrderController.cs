@@ -39,7 +39,7 @@ namespace BusinessLayer.Controllers
                 foreach (var orderItem in order.Items!)
                     purchaseOrder.Items.Add(_ItemFactory.CreateItem(orderItem.ItemId));
                 var shippingSlip = _PurchaseOrderProcessor.Process(purchaseOrder);
-                return Ok();
+                return Ok(shippingSlip);
             }
             catch(Exception ex)
             {
