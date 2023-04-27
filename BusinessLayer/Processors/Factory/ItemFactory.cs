@@ -5,7 +5,7 @@ using BusinessLayer.Models.Membership;
 using DataAccessLayer.Data;
 using DataAccessLayer.DataModel;
 
-namespace BusinessLayer.Factory
+namespace BusinessLayer.Processors.Factory
 {
     public class ItemFactory : IItemFactory
     {

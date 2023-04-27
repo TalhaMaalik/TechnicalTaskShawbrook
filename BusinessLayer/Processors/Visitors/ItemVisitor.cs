@@ -15,7 +15,6 @@ namespace BusinessLayer.Processors.Visitor
         {
             _CustomerRepository = customerRepository;
         }
-
         public void ProcessPhysicalProduct(StringBuilder builder, PhysicalProduct product)
         {
             var shippingSlip = product.Process(new KeyValueShippingSlip());

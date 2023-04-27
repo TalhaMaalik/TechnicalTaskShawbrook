@@ -1,7 +1,7 @@
 ﻿using BusinessLayer.Models.Base;
 using DataAccessLayer.DataModel;
 
-namespace BusinessLayer.Factory
+namespace BusinessLayer.Processors.Factory
 {
     public interface IItemFactory
     {
