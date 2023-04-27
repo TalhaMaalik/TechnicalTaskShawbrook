@@ -16,7 +16,7 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IValidator, RequestValidator>();
 builder.Services.AddScoped<IItemFactory, ItemFactory>();
 builder.Services.AddScoped<IPurchaseOrderProcessor, PurchaseOrderProcessor>();
-builder.Services.AddTransient<IItemVisitor, ItemVisitor>();
+builder.Services.AddTransient<IItemVisitor, ItemProcessor>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();

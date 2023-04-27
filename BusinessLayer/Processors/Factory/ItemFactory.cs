@@ -39,13 +39,13 @@ namespace BusinessLayer.Processors.Factory
             switch (membershipType)
             {
                 case MembershipType.BookMembership:
-                    return new BookClubMembership(item.Id, item.Name, item.Cost);
+                    return new BookClubMembership(membership.Id, membership.Name, item.Cost, membership.Days);
                 case MembershipType.VideoMembership:
-                    return new VideoClubMembership(item.Id, item.Name, item.Cost);
+                    return new VideoClubMembership(membership.Id, membership.Name, item.Cost, membership.Days);
                 case MembershipType.PremiumMembership:
-                    return new PremiumClubMembership(item.Id, item.Name, item.Cost);
+                    return new PremiumClubMembership(membership.Id, membership.Name, item.Cost, membership.Days);
                 default:
-                    return new UnknownMembership(item.Id, item.Name, item.Cost);
+                    return new UnknownMembership(membership.Id, membership.Name, item.Cost, membership.Days);
             }
         }
     }

@@ -1,7 +1,10 @@
-﻿namespace BusinessLayer.Models.Membership
+﻿using BusinessLayer.Enums;
+
+namespace BusinessLayer.Models.Membership
 {
     public class VideoClubMembership : Membership
     {
-        public VideoClubMembership(Guid id, string? name, decimal cost) : base(id, name, cost){}
+        public override MembershipType MembershipType => MembershipType.VideoMembership;
+        public VideoClubMembership(Guid id, string? name, decimal cost, int days) : base(id, name, cost, days) { }
     }
 }

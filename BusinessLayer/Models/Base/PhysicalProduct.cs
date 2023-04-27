@@ -12,10 +12,10 @@ namespace BusinessLayer.Models.Base
             visitor.VisitPhysicalProduct(this);
         }
 
-        public string Process(IShippingSlipStrategy strategy)
+        public virtual string GetShippingSlip(IShippingSlipStrategy strategy)
         {
-            TaskExecution();
             return strategy.GenerateShippingSlip(this);
         }
+
     }
 }

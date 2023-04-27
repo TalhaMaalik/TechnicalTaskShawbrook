@@ -12,6 +12,5 @@ namespace DataAccessLayer.DataModel
         public Guid MembershipID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Guid PurchaseOrderID { get; set; }
     }
 }

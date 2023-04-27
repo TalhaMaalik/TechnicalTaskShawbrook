@@ -9,10 +9,8 @@ namespace BusinessLayer.Profiles
     {
         public PurchaseOrderProfile() 
         {
-            var purchaseOrderMapping = CreateMap<PurchaseOrderCreateDTO,PurchaseOrder>();
-            purchaseOrderMapping.ForAllMembers(opt => opt.Ignore());
-            purchaseOrderMapping.ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId));
-
+            var purchaseOrderMapping = CreateMap<PurchaseOrderCreateDTO,PurchaseOrder>()
+                .ForMember(dest => dest.Items, opt => opt.Ignore());
         }
     }
 }

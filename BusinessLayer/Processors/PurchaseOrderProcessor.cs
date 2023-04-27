@@ -9,13 +9,14 @@ namespace BusinessLayer.Processor
     {
         private readonly IItemVisitor ItemVisitor;
 
-        public PurchaseOrderProcessor(IItemVisitor itemService)
+        public PurchaseOrderProcessor(IItemVisitor itemVisitor)
         {
-            ItemVisitor = itemService;
+            ItemVisitor = itemVisitor;
         }
         public string Process(PurchaseOrder purchaseOrder)
         {
-            foreach(var item in purchaseOrder.Items)
+            ItemVisitor.CustomerId = purchaseOrder.CustomerId;
+            foreach (var item in purchaseOrder.Items)
                 item.Accept(ItemVisitor);
             return ItemVisitor.ShippingSlip.ToString();
         }

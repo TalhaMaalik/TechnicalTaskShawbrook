@@ -2,6 +2,6 @@
 {
     public class UnknownMembership : Membership
     {
-        public UnknownMembership(Guid id, string? name, decimal cost) : base(id, name, cost){}
+        public UnknownMembership(Guid id, string? name, decimal cost, int days) : base(id, name, cost, days) {}
     }
 }

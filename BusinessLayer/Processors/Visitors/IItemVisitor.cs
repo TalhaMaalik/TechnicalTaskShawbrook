@@ -7,6 +7,7 @@ namespace BusinessLayer.Processors.Visitor
     public interface IItemVisitor
     {
         public StringBuilder ShippingSlip { get; }
+        public Guid CustomerId { get; set; }
         public void VisitMembership(Membership membership);
         public void VisitPhysicalProduct(PhysicalProduct product);
         public void VisitItem(Item item);
