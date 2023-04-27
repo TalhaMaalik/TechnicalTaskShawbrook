@@ -4,8 +4,10 @@ using BusinessLayer.Models.Base;
 using BusinessLayer.Processor;
 using BusinessLayer.Processors.Factory;
 using BusinessLayer.Validator;
+using BusinessLayer.Validators;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace BusinessLayer.Controllers
 {
@@ -14,15 +16,13 @@ namespace BusinessLayer.Controllers
     public class PurchaseOrderController : ControllerBase
     {
         private readonly IValidator _Validator;
-        private readonly IItemRepository _ItemRepository;
         private readonly IMapper _Mapper;
         private readonly IItemFactory _ItemFactory;
         private readonly IPurchaseOrderProcessor _PurchaseOrderProcessor;
 
-        public PurchaseOrderController(IValidator validator, IItemRepository itemRepository, IMapper mapper, IItemFactory itemFactory, IPurchaseOrderProcessor purchaseOrderProcessor) 
+        public PurchaseOrderController(IValidator validator, IMapper mapper, IItemFactory itemFactory, IPurchaseOrderProcessor purchaseOrderProcessor) 
         {
             _Validator = validator;
-            _ItemRepository = itemRepository;
             _Mapper = mapper;
             _ItemFactory = itemFactory;
             _PurchaseOrderProcessor = purchaseOrderProcessor;
@@ -45,7 +45,6 @@ namespace BusinessLayer.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
         }
     }
 }

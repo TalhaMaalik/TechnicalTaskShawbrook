@@ -7,18 +7,20 @@ namespace BusinessLayer.Processor
 {
     public class PurchaseOrderProcessor : IPurchaseOrderProcessor
     {
-        private readonly IItemVisitor ItemVisitor;
+        private readonly IItemVisitor ItemProcessor;
 
-        public PurchaseOrderProcessor(IItemVisitor itemVisitor)
+        public PurchaseOrderProcessor(IItemVisitor itemProcessor)
         {
-            ItemVisitor = itemVisitor;
+            ItemProcessor = itemProcessor;
         }
+
         public string Process(PurchaseOrder purchaseOrder)
         {
-            ItemVisitor.CustomerId = purchaseOrder.CustomerId;
+            ItemProcessor.CustomerId = purchaseOrder.CustomerId;
             foreach (var item in purchaseOrder.Items)
-                item.Accept(ItemVisitor);
-            return ItemVisitor.ShippingSlip.ToString();
+                item.Accept(ItemProcessor);
+            ItemProcessor.OnClose();
+            return ItemProcessor.ShippingSlip.ToString();
         }
     }
 }

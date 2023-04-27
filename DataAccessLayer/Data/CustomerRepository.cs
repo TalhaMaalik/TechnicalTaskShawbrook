@@ -30,7 +30,7 @@ namespace DataAccessLayer.Data
 
         public CustomerModel GetCustomerById(Guid customerID)
         {
-            var customer = _Context.Customers.FirstOrDefault(i => i.Id == customerID);
+            var customer = _Context.Customers.FirstOrDefault(c => c.Id == customerID);
             if (customer == null)
                 throw new ArgumentException(nameof(customer));
             return customer;
@@ -41,10 +41,15 @@ namespace DataAccessLayer.Data
                 throw new ArgumentException(nameof(customerMembership));
             _Context.CustomerMemberships.Add(customerMembership);
         }
+        public bool CustomerExists(Guid customerID)
+        {
+            return _Context.Customers.Any(c => c.Id == customerID);
+        }
 
         public bool SaveChanges()
         {
             return (_Context.SaveChanges() >=0);
         }
+
     }
 }

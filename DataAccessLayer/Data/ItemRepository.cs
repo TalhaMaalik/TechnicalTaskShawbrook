@@ -24,6 +24,10 @@ namespace DataAccessLayer.Data
                 throw new ArgumentException(nameof(item));
             return item;
         }
+        public bool ItemExists(Guid id)
+        {
+            return _Context.Items.Any(i => i.Id == id);
+        }
 
         public bool SaveChanges()
         {

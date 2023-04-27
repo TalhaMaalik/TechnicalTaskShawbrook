@@ -11,6 +11,7 @@ namespace BusinessLayer.Processors.Visitor
     {
         private readonly ICustomerRepository _CustomerRepository;
         public StringBuilder ShippingSlip { get; set; } = new StringBuilder();
+        public decimal TotalCost { get; set; }
         public Guid CustomerId { get; set; }
 
         public ItemProcessor(ICustomerRepository customerRepository)
@@ -47,8 +48,10 @@ namespace BusinessLayer.Processors.Visitor
                 EndDate = membership.CaculateEndTime(DateTime.Now)
             };
             _CustomerRepository.AddNewMembership(customerMembership);
+        }
+        public void OnClose()
+        {
             _CustomerRepository.SaveChanges();
         }
-
     }
 }

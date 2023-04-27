@@ -7,6 +7,7 @@ namespace DataAccessLayer.Data
         public CustomerModel GetCustomerById(Guid customerID);
 
         public bool DoesCustomerHaveMembership(Guid customerID);
+        public bool CustomerExists(Guid customerID);
 
         public void CreateCustomer(CustomerModel customer);
 
