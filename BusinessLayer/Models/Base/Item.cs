@@ -1,8 +1,9 @@
 ﻿using BusinessLayer.Enums;
+using BusinessLayer.Processors.Visitor;
 
 namespace BusinessLayer.Models.Base
 {
-    public abstract class Item
+    public abstract class Item : IElement
     {
         public Item(Guid id, string? name, decimal cost)
         {
@@ -14,6 +15,11 @@ namespace BusinessLayer.Models.Base
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public decimal Cost { get; set; }
+
+        public virtual void Accept(IItemVisitor visitor)
+        {
+            visitor.VisitItem(this);
+        }
 
         public void Process()
         {

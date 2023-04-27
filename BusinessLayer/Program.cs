@@ -1,6 +1,6 @@
 using BusinessLayer.Factory;
 using BusinessLayer.Processor;
-using BusinessLayer.Processors.Services;
+using BusinessLayer.Processors.Visitor;
 using BusinessLayer.Validator;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,7 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IValidator, RequestValidator>();
 builder.Services.AddScoped<IItemFactory, ItemFactory>();
 builder.Services.AddScoped<IPurchaseOrderProcessor, PurchaseOrderProcessor>();
-builder.Services.AddTransient<IItemService, ItemService>();
+builder.Services.AddTransient<IItemVisitor, ItemVisitor>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
