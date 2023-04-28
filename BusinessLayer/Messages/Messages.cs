@@ -3,6 +3,8 @@
     public static class Message
     {
         public const string ItemDoesNotExist = "Item given in the request does not exists.";
+        public const string ItemAreNotGiven = "Items are not given in the request";
+        public const string ItemListIsEmpty = "Items list provided in the request is empty.";
         public const string CustomerDoesNotExist = "Customer given in the request does not exists.";
         public const string CustomerWithEmailExistInSystem = "Customer email already exists in the system.";
         public const string PleaseProvideTheCustomerInTheRequest = "PleaseProvideTheCustomerInTheRequest.";

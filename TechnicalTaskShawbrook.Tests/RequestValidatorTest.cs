@@ -1,8 +1,6 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Messages;
 using BusinessLayer.Validator;
-using BusinessLayer.Validators;
-using Castle.Core.Resource;
 using DataAccessLayer.Data;
 using Moq;
 using Xunit;
@@ -19,18 +17,7 @@ namespace TechnicalTaskShawbrook.Tests
             _Sut = new RequestValidator(_CustomerRepoMock.Object, _ItemRepoMock.Object);
         }
 
-        [Fact]
-        public void ValidateCustomerEmailExists_ShouldWork_WhenCustomerDoesNotExists()
-        {
-            //Arrange
-            var email = "test@test.com";
-            _CustomerRepoMock.Setup(x => x.CustomerExistsByEmail(email)).Returns(false);
-
-            //Act && Assert
-            _Sut.ValidateCustomerEmailExists(email);
-
-        }
-
+        #region ValidateCustomerEmailExists
         [Fact]
         public void ValidateCustomerEmailExists_ShouldThrowError_WhenCustomerExists()
         {
@@ -46,6 +33,18 @@ namespace TechnicalTaskShawbrook.Tests
         }
 
         [Fact]
+        public void ValidateCustomerEmailExists_ShouldWork_WhenCustomerDoesNotExists()
+        {
+            //Arrange
+            var email = "test@test.com";
+            _CustomerRepoMock.Setup(x => x.CustomerExistsByEmail(email)).Returns(false);
+
+            //Act && Assert
+            _Sut.ValidateCustomerEmailExists(email);
+
+        }
+
+        [Fact]
         public void ValidateCustomerEmailExists_ShouldWork_WhenCustomerIsNull()
         {
             //Arrange
@@ -56,6 +55,8 @@ namespace TechnicalTaskShawbrook.Tests
             _Sut.ValidateCustomerEmailExists(email);
         }
 
+        #endregion
+        #region ValidateCustomerCreateDTO
         [Fact]
         public void ValidateCustomerCreateDTO_ShouldWork_WhenInputsAreGiven()
         {
@@ -148,6 +149,9 @@ namespace TechnicalTaskShawbrook.Tests
             Assert.Equal(Message.CustomerNameCannotBeNull+"\r\n"+ Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
         }
 
+        #endregion
+        #region ValidateCustomerId
+
         [Fact]
         public void ValidateCustomerId_ShouldNotThrowError_WhenCustomerExist()
         {
@@ -217,6 +221,8 @@ namespace TechnicalTaskShawbrook.Tests
             Assert.Equal("Test exception", ex.Message);
         }
 
+        #endregion
+        #region ValidateItemsId
 
         [Fact]
         public void ValidateItemsId_ShowThrowError_WhenItemDoesnotExist()
@@ -257,6 +263,9 @@ namespace TechnicalTaskShawbrook.Tests
             _Sut.ValidateItemsId(items);
         }
 
+        #endregion
+        #region ValidatePurchaseOrderCreateDTO
+
         [Fact]
         public void ValidatePurchaseOrderCreateDTO_ShouldWork_WhenInputsAreCorrectGiven()
         {
@@ -271,6 +280,82 @@ namespace TechnicalTaskShawbrook.Tests
             //Act & Assert
             _Sut.Validate(purchaseOrderDTO);
         }
+
+        [Fact]
+        public void ValidatePurchaseOrderCreateDTO_ShouldThrowError_WhenCustomerIdIsNotGiven()
+        {
+            //Arrange
+            var purchaseOrderDTO = new PurchaseOrderCreateDTO() { Items = GenerateItems() };
+            _CustomerRepoMock
+                .Setup(x => x.CustomerExists(purchaseOrderDTO.CustomerId))
+                .Returns(false);
+            _ItemRepoMock
+                .Setup(x => x.ItemExists(It.IsAny<Guid>()))
+                .Returns(true);
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(purchaseOrderDTO));
+
+            //Assert
+            Assert.Equal(Message.CustomerDoesNotExist, ex.Message);
+        }
+
+        [Fact]
+        public void ValidatePurchaseOrderCreateDTO_ShouldThrowError_WhenItemIsNotGiven()
+        {
+            //Arrange
+            var purchaseOrderDTO = new PurchaseOrderCreateDTO() { CustomerId = Guid.NewGuid() };
+            _CustomerRepoMock
+                .Setup(x => x.CustomerExists(purchaseOrderDTO.CustomerId))
+                .Returns(false);
+            _ItemRepoMock
+                .Setup(x => x.ItemExists(It.IsAny<Guid>()))
+                .Returns(true);
+
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(purchaseOrderDTO));
+
+            //Assert
+            Assert.Equal(Message.ItemAreNotGiven + "\r\n" + Message.ItemListIsEmpty + "\r\n", ex.Message);
+        }
+
+        [Fact]
+        public void ValidatePurchaseOrderCreateDTO_ShouldThrowError_WhenCustomerDoesnotExist()
+        {
+            //Arrange
+            var purchaseOrderDTO = new PurchaseOrderCreateDTO() { CustomerId = Guid.NewGuid(), Items = GenerateItems()};
+            _CustomerRepoMock
+                .Setup(x => x.CustomerExists(purchaseOrderDTO.CustomerId))
+                .Returns(false);
+            _ItemRepoMock
+                .Setup(x => x.ItemExists(It.IsAny<Guid>()))
+                .Returns(true);
+
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(purchaseOrderDTO));
+
+            //Assert
+            Assert.Equal(Message.CustomerDoesNotExist, ex.Message);
+        }
+
+        [Fact]
+        public void ValidatePurchaseOrderCreateDTO_ShouldThrowError_WhenItemDoesnotExist()
+        {
+            //Arrange
+            var purchaseOrderDTO = new PurchaseOrderCreateDTO() { CustomerId = Guid.NewGuid(), Items = GenerateItems() };
+            _CustomerRepoMock
+                .Setup(x => x.CustomerExists(purchaseOrderDTO.CustomerId))
+                .Returns(true);
+            _ItemRepoMock
+                .Setup(x => x.ItemExists(It.IsAny<Guid>()))
+                .Returns(false);
+
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(purchaseOrderDTO));
+
+            //Assert
+            Assert.Equal(Message.ItemDoesNotExist, ex.Message);
+        }
+        #endregion
 
         private List<ItemCreateDTO> GenerateItems()
         {

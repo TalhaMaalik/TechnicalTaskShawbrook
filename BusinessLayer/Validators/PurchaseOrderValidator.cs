@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DTOs;
+using BusinessLayer.Messages;
 using FluentValidation;
 
 namespace BusinessLayer.Validators
@@ -7,8 +8,9 @@ namespace BusinessLayer.Validators
     {
         public PurchaseOrderValidator()
         {
-            RuleFor(p => p.CustomerId).NotNull().NotEmpty();
-            RuleFor(p => p.Items).NotNull().NotEmpty();
+            RuleFor(p => p.CustomerId).NotNull().WithMessage(Message.CustomerDoesNotExist);
+            RuleFor(p => p.Items).NotNull().WithMessage(Message.ItemAreNotGiven);
+            RuleFor(p => p.Items).NotEmpty().WithMessage(Message.ItemListIsEmpty);
         }
     }
 }
