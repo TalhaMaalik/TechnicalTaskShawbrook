@@ -18,6 +18,7 @@ namespace BusinessLayer.Processors.Visitor
         {
             _CustomerRepository = customerRepository;
         }
+
         public void VisitItem(Item item)
         {
             item.Process();

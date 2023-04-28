@@ -45,11 +45,15 @@ namespace DataAccessLayer.Data
         {
             return _Context.Customers.Any(c => c.Id == customerID);
         }
-
+        public bool CustomerExistsByEmail(string email)
+        {
+            return _Context.Customers.Any(c => c.Email == email);
+        }
         public bool SaveChanges()
         {
             return (_Context.SaveChanges() >=0);
         }
+
 
     }
 }

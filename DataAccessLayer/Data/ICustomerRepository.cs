@@ -8,11 +8,9 @@ namespace DataAccessLayer.Data
 
         public bool DoesCustomerHaveMembership(Guid customerID);
         public bool CustomerExists(Guid customerID);
-
+        public bool CustomerExistsByEmail(string email);
         public void CreateCustomer(CustomerModel customer);
-
         public void AddNewMembership(CustomerMembershipModel customerMembership);
-
         public bool SaveChanges();
     }
 }

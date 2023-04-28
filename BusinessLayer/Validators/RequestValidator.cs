@@ -2,6 +2,8 @@
 using BusinessLayer.Messages;
 using BusinessLayer.Validators;
 using DataAccessLayer.Data;
+using FluentValidation.Results;
+using Microsoft.Identity.Client;
 using System.Text;
 
 namespace BusinessLayer.Validator
@@ -18,20 +20,31 @@ namespace BusinessLayer.Validator
         }
         public void Validate(PurchaseOrderCreateDTO purchaseOrder)
         {
-            ValidatePurchaseOrderInputs(purchaseOrder);
-            ValidateCustomer(purchaseOrder.CustomerId);
-            ValidateItems(purchaseOrder.Items!);
+            ValidateInputs(new PurchaseOrderValidator().Validate(purchaseOrder));
+            ValidateCustomerId(purchaseOrder.CustomerId);
+            ValidateItemsId(purchaseOrder.Items!);
         }
 
         public void Validate(CustomerCreateDTO customer)
         {
+            if(customer == null)
+               throw new ArgumentException(Message.PleaseProvideTheCustomerInTheRequest);
+            ValidateCustomerEmailExists(customer.Email);
+            ValidateInputs(new CustomerValidator().Validate(customer));
         }
-        public void ValidateCustomer(Guid customerId)
+
+        public void ValidateCustomerEmailExists(string email)
+        {
+            if (_CustomerRepository.CustomerExistsByEmail(email))
+                throw new ArgumentException(Message.CustomerWithEmailExistInSystem);
+        }
+
+        public void ValidateCustomerId(Guid customerId)
         {
             if (_CustomerRepository.CustomerExists(customerId) == false)
                 throw new ArgumentException(Message.CustomerDoesNotExist);
         }
-        public void ValidateItems(IEnumerable<ItemCreateDTO> items)
+        public void ValidateItemsId(IEnumerable<ItemCreateDTO> items)
         {
             foreach(var item in items)
             {
@@ -39,11 +52,10 @@ namespace BusinessLayer.Validator
                     throw new ArgumentException(Message.ItemDoesNotExist);
             } 
         }
-        public void ValidatePurchaseOrderInputs(PurchaseOrderCreateDTO purchaseOrder)
+
+        private void ValidateInputs(ValidationResult result)
         {
             var errors = new StringBuilder();
-            var validator = new PurchaseOrderValidator();
-            var result = validator.Validate(purchaseOrder);
             if (result.IsValid == false)
             {
                 foreach (var failure in result.Errors)
