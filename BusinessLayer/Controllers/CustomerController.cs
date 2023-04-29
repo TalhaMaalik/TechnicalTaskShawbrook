@@ -32,8 +32,8 @@ namespace BusinessLayer.Controllers
                 var customerModel = _Mapper.Map<CustomerModel>(customer);
                 customerModel.Id = Guid.NewGuid();
                 _CustomerRepository.CreateCustomer(customerModel);
-                if(_CustomerRepository.SaveChanges())
-                    return Created(HttpContext.Request.Path, _Mapper.Map<CustomerReadDTO>(customerModel));
+                if (_CustomerRepository.SaveChanges())
+                    return Ok(_Mapper.Map<CustomerReadDTO>(customerModel));
                 else
                     return Problem();
             }
