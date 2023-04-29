@@ -7,7 +7,7 @@
         public const string ItemListIsEmpty = "Items list provided in the request is empty.";
         public const string CustomerDoesNotExist = "Customer given in the request does not exists.";
         public const string CustomerWithEmailExistInSystem = "Customer email already exists in the system.";
-        public const string PleaseProvideTheCustomerInTheRequest = "PleaseProvideTheCustomerInTheRequest.";
+        public const string PleaseProvideTheCustomerInTheRequest = "Please provide the customer in the request.";
         public const string CustomerNameCannotBeNull = "Customer name cannot be null in the request.";
         public const string CustomerNameCannotBeEmpty = "Customer name cannot be empty in the request.";
         public const string CustomerEmailCannotBeNull = "Customer email cannot be null in the request.";
