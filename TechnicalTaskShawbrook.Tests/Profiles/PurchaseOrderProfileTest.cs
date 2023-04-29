@@ -5,7 +5,7 @@ using BusinessLayer.Profiles;
 using DataAccessLayer.DataModel;
 using Xunit;
 
-namespace TechnicalTaskShawbrook.Tests
+namespace TechnicalTaskShawbrook.Tests.Profiles
 {
     public class PurchaseOrderProfileTest
     {

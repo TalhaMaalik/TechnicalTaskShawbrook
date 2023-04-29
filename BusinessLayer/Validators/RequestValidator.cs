@@ -46,7 +46,9 @@ namespace BusinessLayer.Validator
         }
         public void ValidateItemsId(IEnumerable<ItemCreateDTO> items)
         {
-            foreach(var item in items)
+            if (items == null || items.Count() == 0)
+                throw new ArgumentException(Message.ItemListIsEmpty);
+            foreach (var item in items)
             {
                 if (_ItemRepository.ItemExists(item.ItemId) == false)
                     throw new ArgumentException(Message.ItemDoesNotExist);

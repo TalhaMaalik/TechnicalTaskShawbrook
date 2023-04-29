@@ -30,14 +30,14 @@ namespace BusinessLayer.Controllers
 
         [HttpPost]
         [Route("create")]
-        public IActionResult CreatePurchaseOrder(PurchaseOrderCreateDTO order)
+        public ActionResult<string> CreatePurchaseOrder(PurchaseOrderCreateDTO order)
         {
             try
             {
                 _Validator.Validate(order);
                 var purchaseOrder = _Mapper.Map<PurchaseOrder>(order);
                 foreach (var orderItem in order.Items!)
-                    purchaseOrder.Items.Add(_ItemFactory.CreateItem(orderItem.ItemId));
+                    purchaseOrder.Items.Add(_ItemFactory.Create(orderItem.ItemId));
                 var shippingSlip = _PurchaseOrderProcessor.Process(purchaseOrder);
                 return Ok(shippingSlip);
             }

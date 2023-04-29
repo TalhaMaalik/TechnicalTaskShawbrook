@@ -5,7 +5,7 @@ using DataAccessLayer.Data;
 using Moq;
 using Xunit;
 
-namespace TechnicalTaskShawbrook.Tests
+namespace TechnicalTaskShawbrook.Tests.Validators
 {
     public class RequestValidatorTest
     {
@@ -140,13 +140,13 @@ namespace TechnicalTaskShawbrook.Tests
         public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerNameIsNotGiven()
         {
             //Arrange
-            var customerDTO = new CustomerCreateDTO() { Email = "test@test.com"};
+            var customerDTO = new CustomerCreateDTO() { Email = "test@test.com" };
 
             //Act
             var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
 
             //Assert
-            Assert.Equal(Message.CustomerNameCannotBeNull+"\r\n"+ Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
+            Assert.Equal(Message.CustomerNameCannotBeNull + "\r\n" + Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
         }
 
         #endregion
@@ -159,7 +159,7 @@ namespace TechnicalTaskShawbrook.Tests
             var customerId = Guid.NewGuid();
             _CustomerRepoMock
                 .Setup(x => x.CustomerExists(customerId))
-                .Returns (true);
+                .Returns(true);
 
             //Act & Assert
             _Sut.ValidateCustomerId(customerId);
@@ -254,13 +254,14 @@ namespace TechnicalTaskShawbrook.Tests
         }
 
         [Fact]
-        public void ValidateItemsId_ShouldNotThrowEror_WhenItemListEmptyExists()
+        public void ValidateItemsId_ShouldThrowEror_WhenItemListEmptyExists()
         {
             // Arrange
             var items = new List<ItemCreateDTO>();
 
             // Act & Assert
-            _Sut.ValidateItemsId(items);
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.ValidateItemsId(items));
+
         }
 
         #endregion
@@ -322,7 +323,7 @@ namespace TechnicalTaskShawbrook.Tests
         public void ValidatePurchaseOrderCreateDTO_ShouldThrowError_WhenCustomerDoesnotExist()
         {
             //Arrange
-            var purchaseOrderDTO = new PurchaseOrderCreateDTO() { CustomerId = Guid.NewGuid(), Items = GenerateItems()};
+            var purchaseOrderDTO = new PurchaseOrderCreateDTO() { CustomerId = Guid.NewGuid(), Items = GenerateItems() };
             _CustomerRepoMock
                 .Setup(x => x.CustomerExists(purchaseOrderDTO.CustomerId))
                 .Returns(false);

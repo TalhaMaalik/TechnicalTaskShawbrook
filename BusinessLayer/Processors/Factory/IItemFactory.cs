@@ -5,6 +5,6 @@ namespace BusinessLayer.Processors.Factory
 {
     public interface IItemFactory
     {
-        public Item CreateItem(Guid itemId);
+        public Item Create(Guid itemId);
     }
 }

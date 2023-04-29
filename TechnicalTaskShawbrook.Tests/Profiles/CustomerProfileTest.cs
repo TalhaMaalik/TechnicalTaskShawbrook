@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace TechnicalTaskShawbrook.Tests
+namespace TechnicalTaskShawbrook.Tests.Profiles
 {
     public class CustomerProfileTest
     {

@@ -15,7 +15,7 @@ namespace BusinessLayer.Processors.Factory
         { 
             _ItemRepository = repository;
         }
-        public Item CreateItem(Guid itemId)
+        public Item Create(Guid itemId)
         {
             var item = _ItemRepository.GetItemById(itemId);
             Enum.TryParse(item.Type, out ItemType itemType);

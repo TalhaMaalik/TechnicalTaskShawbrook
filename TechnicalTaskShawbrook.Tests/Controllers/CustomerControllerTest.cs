@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace TechnicalTaskShawbrook.Tests
+namespace TechnicalTaskShawbrook.Tests.Controllers
 {
     public class CustomerControllerTest
     {
@@ -153,7 +153,7 @@ namespace TechnicalTaskShawbrook.Tests
                 .Returns(new CustomerModel());
             _MapperMock.Setup(x => x.Map<CustomerReadDTO>(It.IsAny<CustomerModel>()))
                 .Returns(new CustomerReadDTO());
-            _CustomerRepoMock.Setup( x => x.CreateCustomer(It.IsAny<CustomerModel>()));
+            _CustomerRepoMock.Setup(x => x.CreateCustomer(It.IsAny<CustomerModel>()));
             _CustomerRepoMock.Setup(x => x.SaveChanges()).Returns(true);
 
             //Act
