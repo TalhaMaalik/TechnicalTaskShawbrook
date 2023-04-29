@@ -32,7 +32,7 @@ namespace BusinessLayer.Processors.Factory
             }
         }
 
-        protected virtual Membership CreateMembership(ItemModel item)
+        public virtual Membership CreateMembership(ItemModel item)
         {
             var membership = _ItemRepository.GetMembershipByItemId(item.Id);
             Enum.TryParse(membership.Type, out MembershipType membershipType);
