@@ -58,8 +58,8 @@ namespace BusinessLayer.Processors.Visitor
 
         private void DoesMembershipAlreadyExistsForCustomer(Guid customerID, Membership membership)
         {
-            var membershipType = _ItemRepository.GetMembershipById(membership.Id);
-            if (_CustomerRepository.DoesCustomerHaveMembership(customerID, membershipType.Id))
+            var membershipDetail = _ItemRepository.GetMembershipById(membership.Id);
+            if (_CustomerRepository.DoesCustomerHaveMembership(customerID, membershipDetail.Id))
                 throw new ArgumentException(Message.CustomerAlreadyHaveThisMembership);
         }
         public void OnClose()
