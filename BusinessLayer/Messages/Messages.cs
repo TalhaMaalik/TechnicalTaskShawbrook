@@ -13,5 +13,6 @@
         public const string CustomerEmailCannotBeNull = "Customer email cannot be null in the request.";
         public const string CustomerEmailCannotBeEmpty = "Customer email cannot be empty in the request.";
         public const string CustomerEmailIsNotAValidEmail = "Customer email is not a valid email address.";
+        public const string CustomerAlreadyHaveThisMembership = "Customer already have this membership.";
     }
 }

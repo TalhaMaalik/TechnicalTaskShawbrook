@@ -42,8 +42,6 @@ namespace BusinessLayer.Processors.Factory
                     return new BookClubMembership(membership.Id, membership.Name, item.Cost, membership.Days);
                 case MembershipType.VideoMembership:
                     return new VideoClubMembership(membership.Id, membership.Name, item.Cost, membership.Days);
-                case MembershipType.PremiumMembership:
-                    return new PremiumClubMembership(membership.Id, membership.Name, item.Cost, membership.Days);
                 default:
                     return new UnknownMembership(membership.Id, membership.Name, item.Cost, membership.Days);
             }

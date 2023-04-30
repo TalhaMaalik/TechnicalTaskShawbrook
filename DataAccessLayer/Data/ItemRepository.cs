@@ -17,6 +17,15 @@ namespace DataAccessLayer.Data
                 throw new ArgumentException(nameof(item));
             return item;
         }
+
+        public MembershipModel GetMembershipById(Guid id)
+        {
+            var item = _Context.Memberships.FirstOrDefault(i => i.Id == id);
+            if (item == null)
+                throw new ArgumentException(nameof(item));
+            return item;
+        }
+
         public MembershipModel GetMembershipByItemId(Guid id)
         {
             var item = _Context.Memberships.FirstOrDefault(i => i.ItemId == id);

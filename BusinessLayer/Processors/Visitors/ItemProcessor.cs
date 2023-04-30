@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Models.Base;
+﻿using BusinessLayer.Messages;
+using BusinessLayer.Models.Base;
 using BusinessLayer.Models.Membership;
 using BusinessLayer.Processors.Strategies;
 using DataAccessLayer.Data;
@@ -10,13 +11,16 @@ namespace BusinessLayer.Processors.Visitor
     public class ItemProcessor : IItemVisitor
     {
         private readonly ICustomerRepository _CustomerRepository;
+        private readonly IItemRepository _ItemRepository;
+
         public StringBuilder ShippingSlip { get; set; } = new StringBuilder();
         public decimal TotalCost { get; set; }
         public Guid CustomerId { get; set; }
 
-        public ItemProcessor(ICustomerRepository customerRepository)
+        public ItemProcessor(ICustomerRepository customerRepository, IItemRepository itemRepository)
         {
             _CustomerRepository = customerRepository;
+            _ItemRepository = itemRepository;
         }
 
         public void VisitItem(Item item)
@@ -27,6 +31,7 @@ namespace BusinessLayer.Processors.Visitor
         public void VisitMembership(Membership membership)
         {
             membership.Process();
+            DoesMembershipAlreadyExistsForCustomer(CustomerId, membership);
             var customer = _CustomerRepository.GetCustomerById(CustomerId);
             StartNewMembership(customer, membership);
         }
@@ -49,6 +54,13 @@ namespace BusinessLayer.Processors.Visitor
                 EndDate = membership.CaculateEndTime(DateTime.Now)
             };
             _CustomerRepository.AddNewMembership(customerMembership);
+        }
+
+        private void DoesMembershipAlreadyExistsForCustomer(Guid customerID, Membership membership)
+        {
+            var membershipType = _ItemRepository.GetMembershipById(membership.Id);
+            if (_CustomerRepository.DoesCustomerHaveMembership(customerID, membershipType.Id))
+                throw new ArgumentException(Message.CustomerAlreadyHaveThisMembership);
         }
         public void OnClose()
         {

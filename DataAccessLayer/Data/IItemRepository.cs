@@ -6,6 +6,7 @@ namespace DataAccessLayer.Data
     {
         public ItemModel GetItemById(Guid id);
         public MembershipModel GetMembershipByItemId(Guid id);
+        public MembershipModel GetMembershipById(Guid id);
         public bool ItemExists(Guid id);
         public bool SaveChanges();
     }

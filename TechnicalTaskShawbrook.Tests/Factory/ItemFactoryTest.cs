@@ -50,22 +50,6 @@ namespace TechnicalTaskShawbrook.Tests.Factory
         }
 
         [Fact]
-        public void CreateMembership_ShouldReturnPremiunMembership_WhenMembershipIsPremium()
-        {
-            //Arrange
-            var membershipModel = new MembershipModel() { Name = "Test", Days = 30, Type = "PremiumMembership", Id = Guid.NewGuid() };
-            var item = new ItemModel() { Id = Guid.NewGuid() };
-            _ItemRepositoryMock.Setup(x => x.GetMembershipByItemId(It.IsAny<Guid>()))
-                .Returns(membershipModel);
-
-            //Act
-            var membership = _Sut.CreateMembership(item);
-
-            //Assert
-            Assert.IsType<PremiumClubMembership>(membership);
-        }
-
-        [Fact]
         public void CreateMembership_ShouldReturnUnknownMembership_WhenMembershipIsUnknown()
         {
             //Arrange

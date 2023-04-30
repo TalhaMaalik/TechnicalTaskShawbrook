@@ -18,9 +18,10 @@ namespace DataAccessLayer.Data
             _Context.Customers.Add(customer);
         }
 
-        public bool DoesCustomerHaveMembership(Guid customerID)
+        public bool DoesCustomerHaveMembership(Guid customerID, Guid membershipId)
         {
-            var membershipRecord = _Context.CustomerMemberships.FirstOrDefault(i => i.CustomerID == customerID);
+            var membershipRecord = _Context.CustomerMemberships
+                .FirstOrDefault(i => i.CustomerID == customerID && i.MembershipID == membershipId);
             if(membershipRecord == null)
                 return false;
             else if(membershipRecord.EndDate < DateTime.Now)
