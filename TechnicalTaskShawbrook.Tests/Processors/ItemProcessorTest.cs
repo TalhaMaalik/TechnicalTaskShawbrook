@@ -6,11 +6,6 @@ using BusinessLayer.Processors.Visitor;
 using DataAccessLayer.Data;
 using DataAccessLayer.DataModel;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace TechnicalTaskShawbrook.Tests.Processors

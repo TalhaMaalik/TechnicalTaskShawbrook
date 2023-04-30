@@ -93,7 +93,7 @@ namespace TechnicalTaskShawbrook.Tests.Validators
             var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
 
             //Assert
-            Assert.Equal(Message.CustomerEmailCannotBeNull + "\r\n" + Message.CustomerEmailCannotBeEmpty + "\r\n", ex.Message, true);
+            Assert.Equal(Message.CustomerEmailCannotBeNull, ex.Message, true);
 
         }
 
@@ -130,7 +130,7 @@ namespace TechnicalTaskShawbrook.Tests.Validators
             var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
 
             //Assert
-            Assert.Equal(Message.CustomerNameCannotBeNull + "\r\n" + Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
+            Assert.Equal(Message.CustomerNameCannotBeNull, ex.Message, true);
         }
 
         #endregion
@@ -339,7 +339,7 @@ namespace TechnicalTaskShawbrook.Tests.Validators
             var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(purchaseOrderDTO));
 
             //Assert
-            Assert.Equal(Message.ItemAreNotGiven + "\r\n" + Message.ItemListIsEmpty + "\r\n", ex.Message);
+            Assert.Equal(Message.ItemAreNotGiven, ex.Message);
         }
 
         [Fact]

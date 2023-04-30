@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Models.Base;
-using Microsoft.Extensions.Hosting;
 
 namespace BusinessLayer.Processors.Strategies
 {

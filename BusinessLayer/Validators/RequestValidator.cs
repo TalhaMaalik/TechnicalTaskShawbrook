@@ -29,7 +29,7 @@ namespace BusinessLayer.Validator
         {
             if(customer == null)
                throw new ArgumentException(Message.PleaseProvideTheCustomerInTheRequest);
-            ValidateCustomerEmailExists(customer.Email);
+            ValidateCustomerEmailExists(customer.Email!);
             ValidateInputs(new CustomerValidator().Validate(customer));
         }
 
@@ -57,12 +57,9 @@ namespace BusinessLayer.Validator
 
         private void ValidateInputs(ValidationResult result)
         {
-            var errors = new StringBuilder();
             if (result.IsValid == false)
             {
-                foreach (var failure in result.Errors)
-                    errors.AppendLine(failure.ErrorMessage);
-                throw new ArgumentException(errors.ToString());
+                throw new ArgumentException(result.Errors.FirstOrDefault().ErrorMessage);
             }
         }
 

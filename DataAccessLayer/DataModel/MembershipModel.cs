@@ -9,7 +9,7 @@ namespace DataAccessLayer.DataModel
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [Column(TypeName = "varchar")]
+        [Column(TypeName = "varchar(100)")]
         public string? Type { get; set; }
         [Required]
         public string? Name { get; set; }
