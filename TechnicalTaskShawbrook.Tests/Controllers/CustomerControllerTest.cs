@@ -72,6 +72,43 @@ namespace TechnicalTaskShawbrook.Tests.Controllers
             Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData("a")]
+        [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void CreateCustomer_ShouldReturnBadRequest_WhenCustomerNameIsInvalid(string name)
+        {
+            // Arrange
+            var customer = new CustomerCreateDTO() { Name = name, Email = "talha@test.com" };
+            _ValidatorMock.Setup(x => x.Validate(customer)).Throws(new ArgumentException());
+
+            // Act
+            var result = _Sut.Create(customer);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+        [Theory]
+        [InlineData("")]
+        [InlineData("a")]
+        [InlineData("a@b.c")]
+        [InlineData("asdasdasd")]
+        [InlineData("adasdasdasdasdasjdasjdkoasjdoasjdjasodkjasdkoasjdkoasj@gmail.com")]
+        [InlineData(".com")]
+        [InlineData("@.com")]
+        public void CreateCustomer_ShouldReturnBadRequest_WhenEmailIsInvalid(string email)
+        {
+            // Arrange
+            var customer = new CustomerCreateDTO() { Name = "Talha", Email = email };
+            _ValidatorMock.Setup(x => x.Validate(customer)).Throws(new ArgumentException());
+
+            // Act
+            var result = _Sut.Create(customer);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
         [Fact]
         public void CreateCustomer_ShouldReturnBadRequest_WhenCustomerEmailIsNotGiven()
         {

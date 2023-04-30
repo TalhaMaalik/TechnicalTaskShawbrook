@@ -17,6 +17,123 @@ namespace TechnicalTaskShawbrook.Tests.Validators
             _Sut = new RequestValidator(_CustomerRepoMock.Object, _ItemRepoMock.Object);
         }
 
+        #region ValidateCustomerCreateDTO
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldWork_WhenInputsAreGiven()
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik", Email = "test@test.com" };
+
+            //Act & Assert
+            _Sut.Validate(customerDTO);
+        }
+
+        [Theory]
+        [InlineData("a")]
+        [InlineData("")]
+        [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidateCustomerCreateDTO_ShouldThrowErrorWork_WhenCustomerNameIsNotValid(string name)
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Name = name, Email = "test@gmail.com" };
+
+            //Act & Assert
+            Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("a")]
+        [InlineData("a@b.c")]
+        [InlineData("asdasdasd")]
+        [InlineData("adasdasdasdasdasjdasjdkoasjdoasjdjasodkjasdkoasjdkoasj@gmail.com")]
+        [InlineData(".com")]
+        [InlineData("@.com")]
+        public void ValidateCustomerCreateDTO_ShouldThrowErrorWork_WhenEmailLengthIsNotValid(string email)
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Name = "Talha", Email = email };
+
+            //Act & Assert
+            Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+        }
+
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerEmailIsNotCorrect()
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik", Email = "talha" };
+
+            //Act & Assert
+            Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+        }
+
+
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerEmailIsEmpty()
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik", Email = string.Empty };
+
+            //Act & Assert
+            Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+        }
+
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerEmailIsNotGiven()
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik" };
+
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+            //Assert
+            Assert.Equal(Message.CustomerEmailCannotBeNull + "\r\n" + Message.CustomerEmailCannotBeEmpty + "\r\n", ex.Message, true);
+
+        }
+
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerNameIsEmpty()
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Email = "test@test.com", Name = string.Empty };
+
+            //Act & //Assert
+            Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+        }
+
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerObjectIsNull()
+        {
+            //Arrange
+            CustomerCreateDTO customerDTO = null;
+
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+            //Assert
+            Assert.Equal(Message.PleaseProvideTheCustomerInTheRequest, ex.Message, true);
+        }
+
+        [Fact]
+        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerNameIsNotGiven()
+        {
+            //Arrange
+            var customerDTO = new CustomerCreateDTO() { Email = "test@test.com" };
+
+            //Act
+            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
+
+            //Assert
+            Assert.Equal(Message.CustomerNameCannotBeNull + "\r\n" + Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
+        }
+
+        #endregion
         #region ValidateCustomerEmailExists
         [Fact]
         public void ValidateCustomerEmailExists_ShouldThrowError_WhenCustomerExists()
@@ -53,100 +170,6 @@ namespace TechnicalTaskShawbrook.Tests.Validators
 
             //Act && Assert
             _Sut.ValidateCustomerEmailExists(email);
-        }
-
-        #endregion
-        #region ValidateCustomerCreateDTO
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldWork_WhenInputsAreGiven()
-        {
-            //Arrange
-            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik", Email = "test@test.com" };
-
-            //Act & Assert
-            _Sut.Validate(customerDTO);
-        }
-
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerEmailIsNotCorrect()
-        {
-            //Arrange
-            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik", Email = "talha" };
-
-            //Act
-            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
-
-            //Assert
-            Assert.Equal(Message.CustomerEmailIsNotAValidEmail + "\r\n", ex.Message, true);
-
-        }
-
-
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerEmailIsEmpty()
-        {
-            //Arrange
-            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik", Email = string.Empty };
-
-            //Act
-            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
-
-            //Assert
-            Assert.Equal(Message.CustomerEmailCannotBeEmpty + "\r\n" + Message.CustomerEmailIsNotAValidEmail + "\r\n", ex.Message, true);
-
-        }
-
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerEmailIsNotGiven()
-        {
-            //Arrange
-            var customerDTO = new CustomerCreateDTO() { Name = "Talha Malik" };
-
-            //Act
-            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
-
-            //Assert
-            Assert.Equal(Message.CustomerEmailCannotBeNull + "\r\n" + Message.CustomerEmailCannotBeEmpty + "\r\n", ex.Message, true);
-
-        }
-
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerNameIsEmpty()
-        {
-            //Arrange
-            var customerDTO = new CustomerCreateDTO() { Email = "test@test.com", Name = string.Empty };
-
-            //Act
-            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
-
-            //Assert
-            Assert.Equal(Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
-        }
-
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerObjectIsNull()
-        {
-            //Arrange
-            CustomerCreateDTO customerDTO = null;
-
-            //Act
-            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
-
-            //Assert
-            Assert.Equal(Message.PleaseProvideTheCustomerInTheRequest, ex.Message, true);
-        }
-
-        [Fact]
-        public void ValidateCustomerCreateDTO_ShouldThrowError_WhenCustomerNameIsNotGiven()
-        {
-            //Arrange
-            var customerDTO = new CustomerCreateDTO() { Email = "test@test.com" };
-
-            //Act
-            var ex = Assert.Throws<ArgumentException>(() => _Sut.Validate(customerDTO));
-
-            //Assert
-            Assert.Equal(Message.CustomerNameCannotBeNull + "\r\n" + Message.CustomerNameCannotBeEmpty + "\r\n", ex.Message, true);
         }
 
         #endregion

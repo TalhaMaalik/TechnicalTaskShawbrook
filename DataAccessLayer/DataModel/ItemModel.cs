@@ -11,6 +11,7 @@ namespace DataAccessLayer.DataModel
         [Required]
         public string? Name { get; set; }
         [Required]
+        [Column(TypeName = "varchar")]
         public string? Type { get; set; }
         [Required]
         public decimal Cost { get; set; }

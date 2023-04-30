@@ -9,6 +9,7 @@
         public const string CustomerWithEmailExistInSystem = "Customer email already exists in the system.";
         public const string PleaseProvideTheCustomerInTheRequest = "Please provide the customer in the request.";
         public const string CustomerNameCannotBeNull = "Customer name cannot be null in the request.";
+        public const string CustomerNameIsNotValid = "Customer name given in the request is not valid.";
         public const string CustomerNameCannotBeEmpty = "Customer name cannot be empty in the request.";
         public const string CustomerEmailCannotBeNull = "Customer email cannot be null in the request.";
         public const string CustomerEmailCannotBeEmpty = "Customer email cannot be empty in the request.";

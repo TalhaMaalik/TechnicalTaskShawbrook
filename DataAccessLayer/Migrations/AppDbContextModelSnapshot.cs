@@ -83,7 +83,7 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
@@ -108,7 +108,7 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
