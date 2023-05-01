@@ -4,10 +4,7 @@ using BusinessLayer.Models.Base;
 using BusinessLayer.Processor;
 using BusinessLayer.Processors.Factory;
 using BusinessLayer.Validator;
-using BusinessLayer.Validators;
-using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace BusinessLayer.Controllers
 {
